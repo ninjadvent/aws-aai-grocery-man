@@ -1,0 +1,11 @@
+# Create Lambda functions
+resource "aws_lambda_function" "receipt_interpreter_agent" {
+  function_name = "receipt-interpreter-agent"
+  runtime       = "python3.9"
+  role          = aws_iam_role.lambda_role.arn
+  handler       = "receipt_interpreter_agent.lambda_handler"
+  filename      = "../lambda_functions/receipt_interpreter_agent.zip"
+  source_code_hash = filebase64sha256("../lambda_functions/receipt_interpreter_agent.zip")
+  depends_on = [aws_iam_policy_attachment.lambda_policy_attachment]
+}
+
